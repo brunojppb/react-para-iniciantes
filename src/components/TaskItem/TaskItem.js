@@ -1,8 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import "./taskitem.css";
+import { TaskState } from "../../App";
 
-export default function TaskItem({ id, title, onUpdateTask, onDeleteTask }) {
+export default function TaskItem({
+  id,
+  title,
+  taskState,
+  onUpdateTask,
+  onDeleteTask
+}) {
   const [isEditing, setIsEditing] = useState(false);
 
   const onContainerClick = () => {
@@ -13,16 +20,33 @@ export default function TaskItem({ id, title, onUpdateTask, onDeleteTask }) {
 
   const onUpdate = (newTitle) => {
     setIsEditing(false);
+    console.log("state");
     if (newTitle.length > 0) {
-      onUpdateTask(id, newTitle);
+      onUpdateTask(id, newTitle, taskState);
     } else {
       onDeleteTask(id);
     }
   };
 
+  const onChangeTaskState = (event) => {
+    console.log("here: ", id, title, event.target.value);
+    onUpdateTask(id, title, event.target.value);
+  };
+
   return (
-    <div className="task-item" onClick={onContainerClick}>
-      {isEditing ? <EditableItem title={title} onUpdate={onUpdate} /> : title}
+    <div className="task-item">
+      {isEditing ? (
+        <EditableItem title={title} onUpdate={onUpdate} />
+      ) : (
+        <div>
+          <div onClick={onContainerClick}>{title}</div>
+          <select onChange={onChangeTaskState} value={taskState}>
+            <option value={TaskState.todo}>{TaskState.todo}</option>
+            <option value={TaskState.doing}>{TaskState.doing}</option>
+            <option value={TaskState.done}>{TaskState.done}</option>
+          </select>
+        </div>
+      )}
     </div>
   );
 }

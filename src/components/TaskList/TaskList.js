@@ -27,6 +27,7 @@ export default function TaskList({
               key={t.id}
               id={t.id}
               title={t.title}
+              taskState={taskState}
               onUpdateTask={onUpdateTask}
               onDeleteTask={onDeleteTask}
             />
@@ -34,7 +35,7 @@ export default function TaskList({
         })}
         <button className="btn" onClick={addTask}>
           <img src={plusIcon} alt="adicionar" />
-          Adicionar cartão
+          Nova Tarefa
         </button>
       </div>
     </div>

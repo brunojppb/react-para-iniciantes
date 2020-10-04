@@ -29,11 +29,11 @@ export default function App() {
     });
   };
 
-  const updateTask = (taskId, newTitle) => {
+  const updateTask = (taskId, title, state) => {
     setTasks((existingTasks) => {
       return existingTasks.map((t) => {
         if (t.id === taskId) {
-          return { ...t, title: newTitle };
+          return { ...t, title, state };
         } else {
           return t;
         }
