@@ -20,7 +20,6 @@ export default function TaskItem({
 
   const onUpdate = (newTitle) => {
     setIsEditing(false);
-    console.log("state");
     if (newTitle.length > 0) {
       onUpdateTask(id, newTitle, taskState);
     } else {
@@ -29,7 +28,6 @@ export default function TaskItem({
   };
 
   const onChangeTaskState = (event) => {
-    console.log("here: ", id, title, event.target.value);
     onUpdateTask(id, title, event.target.value);
   };
 
@@ -52,7 +50,11 @@ export default function TaskItem({
 }
 
 TaskItem.propTypes = {
-  title: PropTypes.string.isRequired
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  taskState: PropTypes.oneOf(["Pendente", "Fazendo", "Completa"]),
+  onUpdateTask: PropTypes.func.isRequired,
+  onDeleteTask: PropTypes.func.isRequired
 };
 
 function EditableItem({ title, onUpdate }) {
@@ -85,3 +87,8 @@ function EditableItem({ title, onUpdate }) {
     />
   );
 }
+
+EditableItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  onUpdate: PropTypes.func.isRequired
+};
